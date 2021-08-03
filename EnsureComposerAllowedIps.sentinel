@@ -1,0 +1,19 @@
+Import "tfplan.sentinel" as plan
+
+#finding resource
+
+allComposerResources = plan.find_resources("google_composer_environment")
+
+allowed_ip_range_listvalidated = true
+
+if length(allowed_ip_range_listvalidated["message"]) > ,0 {
+    allowed_ip_range_list = false
+    print("Restrict ip address")
+}
+
+#Main rules
+main = rules {
+    allowed_ip_range_listvalidated
+    _management_auto_upgrade_validated
+}
+

@@ -1,0 +1,26 @@
+##### Imports #####
+import "tfplan/v2" as tfplan
+import "strings"
+import "types"
+
+
+// #find_resources
+
+find_resources = func(type) {
+  resources = filter tfplan.resource_changes as address, rc {
+  	rc.type is type and
+  	rc.mode is "managed" and
+  	(rc.change.actions contains "create" or rc.change.actions contains "update" or
+     rc.change.actions contains "read" or rc.change.actions contains "no-op")
+  }
+
+  return resources
+}
+
+
+// find_resources_by_provider = func(provider) {
+//   parsed_provider = strings.split(provider, "/")
+//   segment_count = length(parsed_provider)
+//   v = strings.split(tfplan.terraform_version, ".")
+//   v_major = int(v[1])
+
